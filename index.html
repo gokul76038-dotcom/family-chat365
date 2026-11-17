@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Family Chat</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="authScreen" class="screen active">
+  <div class="authWrap">
+    <div class="hero">
+      <div class="logo">🏡</div>
+      <h1>Family Chat</h1>
+      <p>Private chat, calls and files, just for us</p>
+    </div>
+
+    <div class="card" id="loginView">
+      <h2>Welcome back</h2>
+      <div class="hint">Log in with your email and password</div>
+      <label for="liEmail">Email address</label>
+      <input id="liEmail" type="email" placeholder="you@gmail.com" autocapitalize="none" autocomplete="email">
+      <label for="liPw">Password</label>
+      <div class="pwrow">
+        <input id="liPw" type="password" placeholder="Your password" autocomplete="current-password">
+        <button id="liEye" class="eye" type="button">👁</button>
+      </div>
+      <button id="btnLogin" class="primary">Log in</button>
+      <button id="goForgot" class="linkbtn">Forgot password?</button>
+      <div class="sep"><span>New here?</span></div>
+      <button id="goSignup" class="ghost">Create new account</button>
+      <div id="liErr" class="err"></div>
+    </div>
+
+    <div class="card hidden" id="signupView">
+      <h2>Create account</h2>
+      <div class="hint">Use your own email address and choose a password</div>
+      <label for="suName">Your name</label>
+      <input id="suName" placeholder="e.g. Gokul" autocomplete="name">
+      <label for="suEmail">Email address</label>
+      <input id="suEmail" type="email" placeholder="you@gmail.com" autocapitalize="none" autocomplete="email">
+      <label for="suPw">Password (at least 6 characters)</label>
+      <input id="suPw" type="password" placeholder="Choose a password" autocomplete="new-password">
+      <label for="suPw2">Confirm password</label>
+      <input id="suPw2" type="password" placeholder="Type the password again" autocomplete="new-password">
+      <button id="btnSignup" class="primary">Create account</button>
+      <button id="goLogin1" class="linkbtn">Already have an account? Log in</button>
+      <div id="suErr" class="err"></div>
+    </div>
+
+    <div class="card hidden" id="forgotView">
+      <h2>Reset password</h2>
+      <div class="hint">We will email you a link to set a new password</div>
+      <label for="fgEmail">Email address</label>
+      <input id="fgEmail" type="email" placeholder="you@gmail.com" autocapitalize="none" autocomplete="email">
+      <button id="btnReset" class="primary">Send reset link</button>
+      <button id="goLogin2" class="linkbtn">Back to log in</button>
+      <div id="fgMsg" class="err"></div>
+    </div>
+  </div>
+</div>
+
+<div id="listScreen" class="screen">
+  <header>
+    <div class="title">Family Chat</div>
+    <button id="btnProfile" class="icon" title="Profile and settings">👤</button>
+  </header>
+  <div id="contacts"></div>
+  <div id="noContacts" class="empty">No contacts yet.<br>They will appear here once they create an account in the app.</div>
+</div>
+
+<div id="chatScreen" class="screen">
+  <header>
+    <button id="btnBack" class="icon">←</button>
+    <div id="chatAvatar" class="avatar"></div>
+    <div class="title" id="chatName"></div>
+    <button id="btnVoice" class="icon" title="Voice call">📞</button>
+    <button id="btnVideo" class="icon" title="Video call">🎥</button>
+  </header>
+  <div id="msgs"></div>
+  <div id="upl" class="upl hidden"></div>
+  <div class="bar">
+    <button id="btnAttach" class="icon dark">📎</button>
+    <input id="file" type="file" class="hidden">
+    <input id="txt" placeholder="Type a message" autocomplete="off">
+    <button id="btnSend" class="send">➤</button>
+  </div>
+</div>
+
+<div id="profileScreen" class="screen">
+  <header>
+    <button id="btnProfileBack" class="icon">←</button>
+    <div class="title">Profile &amp; Settings</div>
+  </header>
+  <div class="profBody">
+    <div id="profAvatar" class="avatar big"></div>
+    <div class="swatches" id="swatches"></div>
+
+    <div class="card flat">
+      <div class="secTitle">Profile</div>
+      <label for="profName">Display name</label>
+      <input id="profName" placeholder="Your name">
+      <label for="profAbout">About</label>
+      <input id="profAbout" placeholder="Hey there! I am using Family Chat" maxlength="80">
+      <label for="profEmail">Email</label>
+      <input id="profEmail" disabled>
+      <button id="btnProfileSave" class="primary">Save profile</button>
+      <div id="profMsg" class="err"></div>
+    </div>
+
+    <div class="card flat">
+      <div class="secTitle">Chat settings</div>
+      <label for="prefSize">Message text size</label>
+      <select id="prefSize">
+        <option value="14">Small</option>
+        <option value="16">Medium</option>
+        <option value="18">Large</option>
+        <option value="20">Extra large</option>
+      </select>
+      <label for="prefWall">Chat wallpaper</label>
+      <select id="prefWall">
+        <option value="#efeae2">Classic</option>
+        <option value="#dcf1e4">Mint</option>
+        <option value="#dbeafe">Sky</option>
+        <option value="#fdf3d8">Sand</option>
+        <option value="#e9e4f5">Lavender</option>
+      </select>
+    </div>
+
+    <div class="card flat">
+      <div class="secTitle">Account</div>
+      <button id="btnChangePw" class="ghost">Change password (email link)</button>
+      <div id="pwMsg" class="err"></div>
+      <button id="btnProfileLogout" class="danger">Log out</button>
+    </div>
+    <div class="ver">Family Chat 1.1</div>
+  </div>
+</div>
+
+<div id="callScreen" class="overlay hidden">
+  <video id="remoteVideo" autoplay playsinline></video>
+  <video id="localVideo" autoplay playsinline muted></video>
+  <div class="callTop">
+    <div id="callAvatar" class="avatar big"></div>
+    <div id="callName" class="callName"></div>
+    <div id="callStatus" class="callStatus"></div>
+  </div>
+  <div class="callBtns">
+    <button id="btnMute" class="round">🎤</button>
+    <button id="btnCam" class="round">📷</button>
+    <button id="btnHang" class="round red">📵</button>
+  </div>
+</div>
+
+<div id="incoming" class="overlay hidden incoming">
+  <div id="inAvatar" class="avatar big"></div>
+  <div id="inName" class="callName"></div>
+  <div id="inType" class="callStatus"></div>
+  <div class="callBtns">
+    <button id="btnDecline" class="round red">📵</button>
+    <button id="btnAccept" class="round green">📞</button>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
